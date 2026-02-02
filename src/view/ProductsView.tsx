@@ -9,7 +9,7 @@ import { Navigate } from "react-router-dom";
 export default function Products() {
     const [ selectedCategory, setSelectedCategory ] = useState('Todos')
 
-    const { data, isError } = useQuery({
+    const { data, isError, isLoading } = useQuery({
         queryKey: ['getProducts', selectedCategory],
         queryFn: () => getProductsByCategory(selectedCategory),
         retry: false
@@ -20,7 +20,7 @@ export default function Products() {
     }
 
     if (isError) return <Navigate to={'/404'}/>
-
+    if (isLoading) return 'Cargando...'
     if (data) return (
     <>
         <div className="">
